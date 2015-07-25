@@ -61,6 +61,11 @@ public class Main {
                 }
             } catch (IOException e) {
                 LOGGER.info(e.getMessage());
+                try {
+                    Thread.sleep(30_000);
+                } catch (InterruptedException e1) {
+                    LOGGER.warning("Interrupted thread", e1);
+                }
             }
             ep.update();
         }
