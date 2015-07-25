@@ -1,8 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-
-version = file('version.txt').text
+if (file('version.txt').exists()){
+    version = file('version.txt').text
+} else {
+    version = 0
+}
 mainClassName = "ch.tiim.Main"
 
 sourceSets {
@@ -19,7 +22,7 @@ jar {
         attributes("Implementation-Version": version)
     }
 
-    from('src/main/res') {
+    from('.') {
         include 'settings.properties'
     }
 }
