@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+
+version = file('version.txt').text
+mainClassName = "ch.tiim.Main"
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'src/generated/java'
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Version": version)
+    }
+
+    from('src/main/res') {
+        include 'settings.properties'
+    }
+}
+
+jar << {
+    file('version.txt').text = version.toInteger() + 1;
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.zeroc.com/nexus/content/repositories/releases'
+    }
+}
+dependencies {
+    compile group: 'org.json', name: 'json', version: '20141113'
+    compile group: 'com.zeroc', name: 'ice', version: '3.4.2'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.6'
+    // compile group: 'com.zeroc', name: 'icestorm', version: '3.4.2'
+}
