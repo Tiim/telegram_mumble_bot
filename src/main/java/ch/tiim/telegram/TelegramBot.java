@@ -91,7 +91,6 @@ public class TelegramBot {
     }
 
     public TGUpdate[] getUpdates() throws IOException {
-        LOGGER.info("getUpdate();");
         Map<String, String> m = new HashMap<>();
         m.put("offset", Integer.toString(updateId + 1));
         m.put("timeout", "100");
