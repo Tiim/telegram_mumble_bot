@@ -34,18 +34,6 @@ public class IceController {
             LOGGER.info("ICE is not available");
             available = false;
         }
-        if (!available) {
-            return;
-        }
-
-        // TODO: Figure out callbacks!
-        callback = new ServerCallbackI();
-        try {
-            ServerCallbackPrx prx = ServerCallbackPrxHelper.checkedCast(adapter.addWithUUID(callback));
-            metaProxy.getBootedServers()[0].addCallback(prx);
-        } catch (InvalidCallbackException | InvalidSecretException | ServerBootedException e) {
-            LOGGER.warning("Could not add callback", e);
-        }
     }
 
     public static void main(String[] args) {
