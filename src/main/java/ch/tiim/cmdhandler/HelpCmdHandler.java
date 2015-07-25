@@ -9,14 +9,9 @@ import java.io.IOException;
 public class HelpCmdHandler implements CmdHandler {
 
     private final String version;
-    //private final CmdRegistry registry;
 
     public HelpCmdHandler() {
         version = getClass().getPackage().getImplementationVersion();
-        /*registry = new CmdRegistry(
-                new SimpleHandler("ip", "Ussage:\n/ip - Returns the ip of the mumble server."),
-                new SimpleHandler("mumble", "Ussage:\n/mumble - Returns a list of users connected to the mumble server")
-        );*/
     }
 
     @Override
@@ -27,12 +22,6 @@ public class HelpCmdHandler implements CmdHandler {
 
     @Override
     public void handleMessage(String[] cmd, TGMessage m, TelegramBot b) throws IOException {
-        /*if (cmd.length > 1) {
-            String[] cmds = StringArrays.skipFirst(cmd);
-            if (!registry.handle(cmds, m, b)){
-                b.sendAnswer(m, "No help page found for " + cmds[0]);
-            }
-        } else {*/
         b.sendAnswer(m,
                 "Welcome to @TiimB s mumble bot v" + version + "\n" +
                         "\n" +
@@ -43,6 +32,8 @@ public class HelpCmdHandler implements CmdHandler {
                         "\uD83D\uDD39 /mumble subscribe [$(MumbleName)] -  registers you to a mumble name and sends " +
                         "you a message the next time $(MumbleName) comes online. If $(MumbleName) is not specified" +
                         "you will get a message every time a new user connects\n" +
+                        "\uD83D\uDD39 /mumble unsubscribe [$(MumbleName)] - unregisters you from $(MumbleName). If" +
+                        "$(MumbleName) is not specified you will be unregistered from every name.\n" +
                         "\uD83D\uDD39 /mumble info - shows a list of currently connected users\n"
         );
         //}

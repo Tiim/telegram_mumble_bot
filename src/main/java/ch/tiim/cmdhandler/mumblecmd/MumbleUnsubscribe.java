@@ -9,17 +9,17 @@ import ch.tiim.utils.log.Log;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class MumbleSubscribe implements CmdHandler {
-private static final Log LOGGER = new Log(MumbleSubscribe.class);
+public class MumbleUnsubscribe implements CmdHandler {
+    private static final Log LOGGER = new Log(MumbleSubscribe.class);
     private final TableMumbleSubscribe db;
 
-    public MumbleSubscribe(TableMumbleSubscribe db) {
+    public MumbleUnsubscribe(TableMumbleSubscribe db) {
         this.db = db;
     }
 
     @Override
     public boolean canHandleMessage(String[] cmd, TGMessage m) {
-        return cmd.length > 0 && cmd[0].equals("subscribe");
+        return cmd.length > 0 && cmd[0].equals("unsubscribe");
     }
 
     @Override
@@ -29,13 +29,10 @@ private static final Log LOGGER = new Log(MumbleSubscribe.class);
             return;
         }
         try {
-            db.subscribeUser(m.getChat().getId(), cmd.length == 2 ? cmd[1] : "__all__");
-            b.sendAnswer(m, "Successfully subscribed to " + (cmd.length == 2 ? cmd[1] : "every user"));
+            db.unsubscribeUser(m.getChat().getId(), cmd.length == 2 ? cmd[1] : "__all__");
+            b.sendAnswer(m, "Successfully unsubscribed to " + (cmd.length == 2 ? cmd[1] : "every user"));
         } catch (SQLException e) {
             b.sendAnswer(m, "Operation failed:\n" + e.getMessage());
-            if(e.getErrorCode() == 19) {
-                b.sendAnswer(m, "You might be already subscribed to this user");
-            }
             LOGGER.warning(e);
         }
     }

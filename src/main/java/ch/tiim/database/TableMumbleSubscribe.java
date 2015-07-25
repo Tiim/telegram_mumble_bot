@@ -14,12 +14,14 @@ public class TableMumbleSubscribe {
 
     private final PreparedStatement subscribeStmt;
     private final PreparedStatement getSubscriberStmt;
+    private final PreparedStatement unsubscribeStmt;
 
     public TableMumbleSubscribe(DatabaseManager db) throws SQLException {
         this.db = db;
         mkTable();
         subscribeStmt = db.getStatement("INSERT INTO mumble_subscription VALUES (?,?);");
         getSubscriberStmt = db.getStatement("SELECT telegram_id, mumble_name FROM mumble_subscription;");
+        unsubscribeStmt = db.getStatement("DELETE FROM mumble_subscription WHERE telegram_id=? AND (mumble_name=? OR ?)");
     }
 
     public void mkTable() throws SQLException {
@@ -42,6 +44,13 @@ public class TableMumbleSubscribe {
         subscribeStmt.setInt(1, telegramId);
         subscribeStmt.setString(2, mumbleName);
         subscribeStmt.executeUpdate();
+    }
+
+    public void unsubscribeUser(int telegramId, String mumbleName) throws SQLException {
+        unsubscribeStmt.setInt(1, telegramId);
+        unsubscribeStmt.setString(2, mumbleName);
+        unsubscribeStmt.setBoolean(3, mumbleName.equals("__all__"));
+        unsubscribeStmt.executeUpdate();
     }
 
     public Map<String, List<Integer>> getSubscribedUsers() throws SQLException {

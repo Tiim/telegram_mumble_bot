@@ -19,7 +19,9 @@ public class MumbleCmdHandler implements CmdHandler {
         this.mumble = mumble;
         registry = new CmdRegistry(
                 new MumbleInfo(mumble),
-                new MumbleSubscribe(db.getTableMumbleSubscribe())
+                new MumbleSubscribe(db.getTableMumbleSubscribe()),
+                new MumbleUnsubscribe(db.getTableMumbleSubscribe())
+
         );
     }
 
