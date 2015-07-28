@@ -11,8 +11,8 @@ public class DevMain {
 
 
     public static void main(String[] args) {
-        Log.setAppender(new ConsoleAppender());
-        Log.setMinLogLevel(3);
+//        Log.setAppender(new ConsoleAppender());
+//        Log.setMinLogLevel(3);
         Main.init();
 
         if (Main.PROPERTIES.containsKey("dev.token")) {
