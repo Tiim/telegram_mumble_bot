@@ -4,7 +4,7 @@ apply plugin: 'application'
 if (file('version.txt').exists()){
     version = file('version.txt').text
 } else {
-    version = 0
+    version = "0.0.0.noversion"
 }
 mainClassName = "ch.tiim.Main"
 
@@ -28,7 +28,12 @@ jar {
 }
 
 jar << {
-    file('version.txt').text = version.toInteger() + 1;
+    String v = version
+    String[] parts = v.split("\\.|-|\\+")
+    parts[2] = parts[2].toInteger() + 1
+    String text = parts.join "."
+    print(text)
+    file('version.txt').text = text
 }
 
 repositories {
