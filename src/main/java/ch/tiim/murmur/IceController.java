@@ -76,6 +76,7 @@ public class IceController {
         try {
             ServerPrx prx = metaProxy.getBootedServers()[0];
             prx.getUsers().entrySet().stream().forEach((entry) -> {
+                //noinspection EqualsBetweenInconvertibleTypes
                 if (entry.getValue().equals(user)) {
                     try {
                         prx.sendMessage(entry.getKey(), message);
