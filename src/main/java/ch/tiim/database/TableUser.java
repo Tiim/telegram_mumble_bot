@@ -19,6 +19,7 @@ public class TableUser {
     private final PreparedStatement registerUserStmt;
     private final PreparedStatement getNameStmt;
     private final PreparedStatement getUnregisteredStmt;
+    private final PreparedStatement getRegisteredStmt;
 
     public TableUser(DatabaseManager db) throws SQLException {
         this.db = db;
@@ -28,6 +29,7 @@ public class TableUser {
         registerUserStmt = db.getStatement("UPDATE user SET registered = ? WHERE telegram_id=?;");
         getNameStmt = db.getStatement("SELECT name FROM user WHERE telegram_id=?;");
         getUnregisteredStmt = db.getStatement("SELECT * FROM user WHERE registered=0;");
+        getRegisteredStmt = db.getStatement("SELECT * FROM user WHERE registered=1;");
     }
 
     public void mkTable() throws SQLException {
@@ -68,6 +70,25 @@ public class TableUser {
         ResultSet res = getNameStmt.executeQuery();
         res.next();
         return res.getString("name");
+    }
+
+    public TGUser[] getRegisteredUsers() throws SQLException {
+        ResultSet set = getRegisteredStmt.executeQuery();
+        List<TGUser> list = new LinkedList<>();
+        while (set.next()) {
+            int id = set.getInt("telegram_id");
+            String name = set.getString("name");
+            String userName = set.getString("user_name");
+            boolean isGroupChat = set.getBoolean("is_group_chat");
+            TGUser usr;
+            if (isGroupChat) {
+                usr = new TGUser(id, name);
+            } else {
+                usr = new TGUser(id, name, null, userName);
+            }
+            list.add(usr);
+        }
+        return list.toArray(new TGUser[list.size()]);
     }
 
     public TGUser[] getUnregisteredUsers() throws SQLException {
