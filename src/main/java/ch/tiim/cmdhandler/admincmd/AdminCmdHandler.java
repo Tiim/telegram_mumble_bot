@@ -23,6 +23,7 @@ public class AdminCmdHandler implements CmdHandler {
         registry = new CmdRegistry(
                 new RegisterUser(db.getTableUser()),
                 new DumpCmd(db.getTableUser()),
+                new SendInfo(db.getTableUser()),
                 new SimpleHandler("info", System.getProperty("user.name") + " - " + System.getProperty("os.name"))
         );
 
