@@ -42,7 +42,8 @@ public class AdminCmdHandler implements CmdHandler {
                     "Usage:\n" +
                             "/admin register $(id)\n" +
                             "/admin info\n" +
-                            "/admin dump"
+                            "/admin dump\n" +
+                            "/admin send $(message)"
             );
             return;
         }
