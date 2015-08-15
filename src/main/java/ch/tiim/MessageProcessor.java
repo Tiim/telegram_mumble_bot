@@ -31,12 +31,14 @@ public class MessageProcessor {
     }
 
     public void receive(TGMessage msg) {
-        String[] args = msg.getText().split(" ");
-        StringArrays.trimArray(args);
-        try {
-            registry.handle(args, msg, bot);
-        } catch (IOException e) {
-            LOGGER.warning(e);
+        if (msg.getText() != null) {
+            String[] args = msg.getText().split(" ");
+            StringArrays.trimArray(args);
+            try {
+                registry.handle(args, msg, bot);
+            } catch (IOException e) {
+                LOGGER.warning(e);
+            }
         }
     }
 

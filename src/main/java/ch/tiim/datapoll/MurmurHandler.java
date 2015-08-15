@@ -24,6 +24,9 @@ public class MurmurHandler implements DataPoll {
         this.ice = ice;
         this.db = db;
         lastTimeOnline = new ArrayList<>();
+        if (ice.isAvailable()) {
+            lastTimeOnline = ice.getMumbleUsers();
+        }
     }
 
     @Override
