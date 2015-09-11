@@ -30,7 +30,7 @@ public class SendInfo implements CmdHandler {
     public void handleMessage(String[] cmd, TGMessage m, TelegramBot b) throws IOException {
         List<String> numbers = Arrays.asList(cmd);
         String string = numbers.stream().skip(1)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(" "));
         try {
             for (TGUser user : tableUser.getRegisteredUsers()) {
                 b.sendMessage(user.getId(), string);
