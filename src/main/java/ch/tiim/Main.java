@@ -75,6 +75,7 @@ public class Main {
         //noinspection InfiniteLoopStatement
         Log.setAppender(new FileAppender("log.txt"));
         Log.setMinLogLevel(2);
+        Thread.setDefaultUncaughtExceptionHandler((t, e1) -> LOGGER.error("Exception in thread: " + t, e1));
         init();
         try {
             start();
