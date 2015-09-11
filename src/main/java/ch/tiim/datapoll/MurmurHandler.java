@@ -42,19 +42,27 @@ public class MurmurHandler implements DataPoll {
                     //Subscription to user
                     if (hashDB.containsKey(uice.name)) {
                         for (int i : hashDB.get(uice.name)) {
-                            bot.sendMessage(i, uice.name + " went online!");
+                            try {
+                                bot.sendMessage(i, uice.name + " went online!");
+                            } catch (IOException e) {
+                                LOGGER.info(e);
+                            }
                         }
                     }
                     //Subscription to all
                     if (hashDB.containsKey("__all__")) {
                         for (int i : hashDB.get("__all__")) {
-                            bot.sendMessage(i, uice.name + " went online!");
+                            try {
+                                bot.sendMessage(i, uice.name + " went online!");
+                            } catch (IOException e) {
+                                LOGGER.info(e);
+                            }
                         }
                     }
                 }
             }
             lastTimeOnline = usersIce;
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             LOGGER.info(e);
         }
     }
