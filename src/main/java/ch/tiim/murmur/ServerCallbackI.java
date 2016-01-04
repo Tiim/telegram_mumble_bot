@@ -6,74 +6,74 @@ import IceInternal.BasicStream;
 import IceInternal.Direct;
 import IceInternal.Incoming;
 import Murmur.*;
-import ch.tiim.utils.log.Log;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class ServerCallbackI extends Ice.ObjectPrxHelperBase implements ServerCallbackPrx, Object {
-    private static final Log LOGGER = new Log(ServerCallbackI.class);
+    private static final java.util.logging.Logger LOGGER = Logger.getLogger(ServerCallbackI.class.getName());
     public static final String[] __ids = new String[]{"::Ice::Object"};
     private static final String[] __all = new String[]{"ice_id", "ice_ids", "ice_isA", "ice_ping"};
 
     @Override
     public void userConnected(User state) {
-        LOGGER.debug("USER CONNECTED");
+        LOGGER.fine("USER CONNECTED");
     }
 
     @Override
     public void userConnected(User state, Map<String, String> __ctx) {
-        LOGGER.debug("USER CONNECTED ex");
+        LOGGER.fine("USER CONNECTED ex");
     }
 
     @Override
     public void userDisconnected(User state) {
-        LOGGER.debug("USER DISCONNECTED");
+        LOGGER.fine("USER DISCONNECTED");
     }
 
     @Override
     public void userDisconnected(User state, Map<String, String> __ctx) {
-        LOGGER.debug("USER DISCONNECTED ex");
+        LOGGER.fine("USER DISCONNECTED ex");
     }
 
     @Override
     public void userStateChanged(User state) {
-        LOGGER.debug("USER STATE CHANGED");
+        LOGGER.fine("USER STATE CHANGED");
     }
 
     @Override
     public void userStateChanged(User state, Map<String, String> __ctx) {
-        LOGGER.debug("USER STATE CHANGED ex");
+        LOGGER.fine("USER STATE CHANGED ex");
     }
 
     @Override
     public void userTextMessage(User state, TextMessage message) {
-        LOGGER.debug("USER TEXT MESSAGE");
+        LOGGER.fine("USER TEXT MESSAGE");
     }
 
     @Override
     public void userTextMessage(User state, TextMessage message, Map<String, String> __ctx) {
-        LOGGER.debug("USER TEXT MESSAGE ex");
+        LOGGER.fine("USER TEXT MESSAGE ex");
     }
 
     @Override
     public void channelCreated(Channel state) {
-        LOGGER.debug("CHANNEL CREATED");
+        LOGGER.fine("CHANNEL CREATED");
     }
 
     @Override
     public void channelCreated(Channel state, Map<String, String> __ctx) {
-        LOGGER.debug("CHANNEL CREATED ex");
+        LOGGER.fine("CHANNEL CREATED ex");
     }
 
     @Override
     public void channelRemoved(Channel state) {
-        LOGGER.debug("CHANNEL REMOVEC");
+        LOGGER.fine("CHANNEL REMOVEC");
     }
 
     @Override
     public void channelRemoved(Channel state, Map<String, String> __ctx) {
-        LOGGER.debug("CHANNEL REMOVEC ex");
+        LOGGER.fine("CHANNEL REMOVEC ex");
     }
 
     /////////////////////////////////////////////////////////////

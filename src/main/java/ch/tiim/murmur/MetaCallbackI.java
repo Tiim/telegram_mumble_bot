@@ -5,31 +5,31 @@ import Ice.Callback;
 import Murmur.Callback_MetaCallback_started;
 import Murmur.Callback_MetaCallback_stopped;
 import Murmur.ServerPrx;
-import ch.tiim.utils.log.Log;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class MetaCallbackI extends Ice.ObjectPrxHelperBase implements Murmur.MetaCallbackPrx {
-    private static final Log LOGGER = new Log(MetaCallbackI.class);
+    private static final Logger LOGGER = Logger.getLogger(MetaCallbackI.class.getName());
 
     @Override
     public void started(ServerPrx srv) {
-        LOGGER.debug("Server Started");
+        LOGGER.fine("Server Started");
     }
 
     @Override
     public void started(ServerPrx srv, Map<String, String> __ctx) {
-        LOGGER.debug("Server Started ex");
+        LOGGER.fine("Server Started ex");
     }
 
     @Override
     public void stopped(ServerPrx srv) {
-        LOGGER.debug("Server Stopped");
+        LOGGER.fine("Server Stopped");
     }
 
     @Override
     public void stopped(ServerPrx srv, Map<String, String> __ctx) {
-        LOGGER.debug("Server Stopped ex");
+        LOGGER.fine("Server Stopped ex");
     }
 
     ///////////////////////////////////////////////////////

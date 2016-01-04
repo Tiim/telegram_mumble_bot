@@ -31,7 +31,9 @@ public class TGMessage {
 
     public TGMessage(JSONObject o) {
         messageId = o.getInt("message_id");
-        from = new TGUser(o.getJSONObject("from"));
+        if (o.has("from")) {
+            from = new TGUser(o.getJSONObject("from"));
+        }
         date = o.getInt("date");
         chat = new TGUser(o.getJSONObject("chat"));
         forwardFrom = (o.has("forward_from")) ? new TGUser(o.getJSONObject("forward_from")) : null;

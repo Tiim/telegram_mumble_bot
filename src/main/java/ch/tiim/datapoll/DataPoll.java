@@ -3,5 +3,5 @@ package ch.tiim.datapoll;
 import ch.tiim.telegram.TelegramBot;
 
 public interface DataPoll {
-    void poll(TelegramBot bot);
+    void poll(TelegramBot bot, String[] recipients);
 }

@@ -1,14 +1,16 @@
 package ch.tiim.murmur;
 
 import Murmur.*;
-import ch.tiim.utils.log.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class IceController {
-    private static final Log LOGGER = new Log(IceController.class);
+    private static final Logger LOGGER = Logger.getLogger(IceController.class.getName());
 
     private boolean available = true;
     private Murmur.MetaPrx metaProxy;
@@ -47,17 +49,17 @@ public class IceController {
         return available;
     }
 
-    public Collection<User> getMumbleUsers() {
+    public Collection<UserWrapper> getMumbleUsers() {
         try {
             ServerPrx[] serv = metaProxy.getBootedServers();
             if (serv != null && serv.length > 0) {
                 Map<Integer, User> users = serv[0].getUsers();
                 if (users != null) {
-                    return users.values();
+                    return users.values().stream().map(UserWrapper::new).collect(Collectors.toList());
                 }
             }
         } catch (InvalidSecretException | ServerBootedException e) {
-            LOGGER.warning(e);
+            LOGGER.log(Level.WARNING, "Exception while fetching mumble users", e);
         }
         return new ArrayList<>();
     }
@@ -67,7 +69,7 @@ public class IceController {
             ServerPrx[] serv = metaProxy.getBootedServers();
             return serv[0].getChannels().get(id);
         } catch (InvalidSecretException | ServerBootedException e) {
-            LOGGER.warning(e);
+            LOGGER.log(Level.WARNING, "Exception while fetching channels", e);
             return null;
         }
     }
@@ -81,12 +83,12 @@ public class IceController {
                     try {
                         prx.sendMessage(entry.getKey(), message);
                     } catch (InvalidSecretException | InvalidSessionException | ServerBootedException e) {
-                        LOGGER.warning("Could not send message to user", e);
+                        LOGGER.log(Level.WARNING, "Could not send message to user", e);
                     }
                 }
             });
         } catch (InvalidSecretException | ServerBootedException e) {
-            LOGGER.warning(e);
+            LOGGER.log(Level.WARNING, "Error while sending message to user", e);
         }
     }
 
@@ -95,7 +97,7 @@ public class IceController {
             try {
                 ice.destroy();
             } catch (Exception e) {
-                LOGGER.info("Error while cleaning up ICE", e);
+                LOGGER.log(Level.WARNING, "Error while cleaning up ICE", e);
             }
         }
     }

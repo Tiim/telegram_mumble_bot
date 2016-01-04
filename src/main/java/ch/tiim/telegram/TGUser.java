@@ -4,14 +4,18 @@ import org.json.JSONObject;
 
 public class TGUser {
 
-    private int id;
+    private String id;
     private boolean groupChat;
     private String firstName;
     private String lastName;
     private String userName;
 
     public TGUser(JSONObject o) {
-        id = o.getInt("id");
+        if (o.get("id") instanceof Number) {
+            id = Long.toString(o.getLong("id"));
+        } else {
+            id = o.getString("id");
+        }
         if (o.has("title")) {
             firstName = o.getString("title");
             groupChat = true;
@@ -29,13 +33,13 @@ public class TGUser {
      * @param id    chat id
      * @param title chat title
      */
-    public TGUser(int id, String title) {
+    public TGUser(String id, String title) {
         this.id = id;
         this.firstName = title;
         this.groupChat = true;
     }
 
-    public TGUser(int id, String firstName, String lastName, String userName) {
+    public TGUser(String id, String firstName, String lastName, String userName) {
         this.id = id;
         this.firstName = firstName;
         this.groupChat = false;
@@ -56,7 +60,7 @@ public class TGUser {
                 '}';
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

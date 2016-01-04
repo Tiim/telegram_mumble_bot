@@ -1,11 +1,13 @@
 package ch.tiim.telegram;
 
-import ch.tiim.utils.log.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +16,6 @@ import java.util.Map;
 
 
 public class TelegramBot {
-    private static final Log LOGGER = new Log(TelegramBot.class);
     private static final String url = "https://api.telegram.org/bot";
     private final String token;
 
@@ -67,10 +68,13 @@ public class TelegramBot {
     }
 
     //TODO: KEYBOARD LAYOUTS
-    public TGMessage sendMessage(int chatId, String text, boolean disableWebPagePreview, int replyToMessageId) throws IOException {
+    public TGMessage sendMessage(String chatId, String text, boolean disableWebPagePreview, int replyToMessageId, boolean markdown) throws IOException {
         Map<String, String> m = new HashMap<>();
-        m.put("chat_id", Integer.toString(chatId));
+        m.put("chat_id", chatId);
         m.put("text", text);
+        if (markdown) {
+            m.put("parse_mode", "Markdown");
+        }
         m.put("disable_web_page_preview", Boolean.toString(disableWebPagePreview));
         if (replyToMessageId > 0) {
             m.put("reply_to_message_id", Integer.toString(replyToMessageId));
@@ -82,8 +86,12 @@ public class TelegramBot {
         return null;
     }
 
-    public TGMessage sendMessage(int chatId, String text) throws IOException {
-        return sendMessage(chatId, text, false, -1);
+    public TGMessage sendMessage(String chatId, String text) throws IOException {
+        return sendMessage(chatId, text, false, -1, false);
+    }
+
+    public TGMessage sendMessageMarkdown(String chatId, String text) throws IOException {
+        return sendMessage(chatId, text, false, -1, true);
     }
 
     public TGMessage sendAnswer(TGMessage msg, String text) throws IOException {
